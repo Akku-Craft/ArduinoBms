@@ -1,0 +1,12 @@
+I. Das Gehirn (Logik)	Arduino Nano	Führt die gesamte BMS-Logik (Balancing-Strategie, Sicherheitsregeln, Fehlerbehandlung) aus.
+
+II. Messung & Sicherheit:	Batteriemonitor-IC (z.B. LTC68xx, BQ769xx)	Misst hochpräzise und sicher die Einzelzellenspannungen in Reihenschaltung.
+				Temperatursensoren (z.B. DS18B20)	Überwacht die Temperatur jeder Zelle.
+
+III. Lade- und USB-C-Schnittstelle:	USB-C-Buchse	Der physische Lade- und Entladeanschluss.
+					USB-PD Controller-IC	Verhandelt die Ladespannung (z.B. 9V oder 12V) mit der Powerbank über das PD-Protokoll.
+					Lade-IC (Charge Controller)	Regelt den Ladestrom von der USB-C-Quelle in die Batterie (CC/CV-Verfahren).
+
+IV. Leistungselektronik (Schalter):	Haupt-Leistungs-MOSFETs (CHG/DSG)	Die Hauptschalter, die den Lade- (CHG) und Entladestrom (DSG) der gesamten Batterie steuern.
+					Balancing-MOSFETs	Schalten die Balancierwiderstände einzeln pro Zelle ein und aus.
+					Balancierwiderstände	Die Widerstände, die Wärme abgeben, um die Spannung der überladenen Zellen zu senken.
