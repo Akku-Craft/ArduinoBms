@@ -46,6 +46,23 @@ struct CellData {
   bool is_balancing_1;      // TRUE, wenn der Balancierwiderstand dieser Zelle aktiv ist
   bool is_balancing_2;      // TRUE, wenn der Balancierwiderstand dieser Zelle aktiv ist
   SystemStatus status;
+  bool is_connevted;
 };
+
+// Konstanten und definitionen fuer das Packet
+struct SingleUnitData {
+  uint16_t vCell1_mV;    // z.B. 3750 für 3.75V
+  uint16_t vCell2_mV;
+  int16_t temp_C;
+  int number;
+};
+
+struct Packet {
+  uint8_t startByte;
+  uint8_t activeUnits;        // Wie viele haben sich eingetragen?
+  SingleUnitData units[MAX_UNITS];
+  uint8_t checksum;
+};
+
 
 #endif

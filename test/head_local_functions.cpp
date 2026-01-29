@@ -1,5 +1,6 @@
 #ifndef HEAD_LOCAL_FUNCTIONS_H
 #define HEAD_LOCAL_FUNCTIONS_H
+#include "probe.cpp"
 
 #include <Arduino.h>
 #include "BMS_Definitions.h"
@@ -34,6 +35,8 @@ void read_Data_for_first_unit() {
   Units[0].temperature_C = 25;
   Units[0].internal_ID = i;
   Units[0].is_balancing = false;
+
+  currentUnitCount = 1:
 
 }
 
