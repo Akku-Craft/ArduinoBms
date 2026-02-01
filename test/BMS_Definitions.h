@@ -7,6 +7,7 @@
 #define NUM_CELLS_PER_UNIT 2
 #define MAX_UNITS          5
 #define NUM_UNITS          5
+#define ACK_SIGNAL         0x06
 
 // Pin definierung
 const int PIN_ZELLE1 = A1;
