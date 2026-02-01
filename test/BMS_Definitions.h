@@ -34,6 +34,11 @@ enum SystemStatus{
   STATUS_FULL       // Akku ist voll, Laden stoppenmeintest du vorhin nicht irgentwas mit ic2
 }
 
+enum PacketType {
+  TYPE_SCAN,     // Datensammeln (Spannungen lesen)
+  TYPE_BALANCE,  // Befehl (Balancing ein/aus)
+  TYPE_EMERGENCY // Sofort-Aus für alle
+};
 
 struct CellData {
 // Messwerte
@@ -57,8 +62,9 @@ struct SingleUnitData {
   int number;
 };
 
-struct Packet {
+struct ScanPacket {
   uint8_t startByte;
+  uint8_t type;
   uint8_t activeUnits;        // Wie viele haben sich eingetragen?
   SingleUnitData units[MAX_UNITS];
   uint8_t checksum;

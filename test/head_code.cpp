@@ -18,29 +18,30 @@ SoftwareSerial mySerial(10, 11);
 // hier werden die Einheiten registriert und ausgelesen
 void register_and_check_units() {
   // wird gebraucht fuer das Senden
-  struct Packet p;
+  struct ScanPacket p;
 
   // empfangene Daten
-  struct Packet incoming;
+  struct ScanPacket incoming;
 
   // status Variable ob ein Packet empfangen wurde
   bool success = false;
 
   p.activeUnits = 1; 
-  p.data[0] = Units[0];
+  p.units[0] = Units[0];
+  p.type = TYPE_SCAN;
 
   // hier wird das Packet gesendet
-  mySerial.write((byte*)&p, sizeof(Packet));
+  mySerial.write((byte*)&p, sizeof(ScanPacket));
 
 
   // empfangslogik
   unsigned long startWait = millis();
   while (millis() - startWait < 200) {
 
-    if (mySerial.available() >= sizeof(Packet)) {
+    if (mySerial.available() >= sizeof(ScanPacket)) {
     
       // Lies die exakte Anzahl an Bytes direkt in die Struktur
-      mySerial.readBytes((byte*)&incoming, sizeof(Packet));
+      mySerial.readBytes((byte*)&incoming, sizeof(ScanPacket));
 
       success = true;
       
