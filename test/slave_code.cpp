@@ -6,6 +6,42 @@
 SoftwareSerial SerialDown(10, 11); // fuer die Kommunikation die Richtung Slaves geht
 SoftwareSerial SerialUp(8, 9); // fuer die kommunikation die Richtung Head geht
 
+bool forwardAndCheckIfLast(ScanPacket &p) {
+    // 1. Buffer leeren, um keine alten ACKs fälschlicherweise zu lesen
+    while(SerialDown.available()) SerialDown.read();
+
+    // 2. Paket über SerialDown (Richtung Ende) senden
+    SerialDown.write((byte*)&p, sizeof(ScanPacket));
+
+    // 3. Auf ACK vom nächsten Slave warten (Timeout ca. 30-50ms)
+    unsigned long startWait = millis();
+    bool ackReceived = false;
+
+    SerialUp.listen();
+
+    while (millis() - startWait < 50) {
+        if (SerialUp.available()) {
+        if (SerialUp.read() == ACK_SIGNAL) {
+            ackReceived = true;
+            break;
+        }
+        }
+    }
+
+    // 4. Auswertung
+    if (!ackReceived) {
+        // Keiner hat geantwortet -> Wir sind das Ende der Kette!
+        Serial.println("Kein Nachbar gefunden. Ich bin die letzte Einheit.");
+        SerialUp.write((byte*)&p, sizeof(ScanPacket));
+        return true; 
+    } else {
+        // Nachbar ist da und hat das Paket übernommen
+        Serial.println("Paket an Nachfolger übergeben.");
+        return false;
+    }
+}
+
+// in dieser Funktion wird die Einehit in das Packet eingetragen und es wird sofort an den naechsten weitergeschickt
 void handleScanPacket(Packet &p) {
   // Meine Position im Paket ist der aktuelle Zählerstand
   // Wenn der Head activeUnits = 1 gesetzt hat, schreibt der erste Slave in Index 1
@@ -22,55 +58,55 @@ void handleScanPacket(Packet &p) {
 
     // Den Zähler für den nächsten Nachbarn erhöhen
     p.activeUnits++;
-
-    // 4. Das Paket sofort weiter an den nächsten Slave (oder zurück zum Head)
-    SerialDown.write((byte*)&p, sizeof(Packet));
     
     Serial.print("Paket bearbeitet an Position: ");
     Serial.println(myPos);
   }
 }
 
-void recv_data() {
-// Wir warten NUR auf die ersten 2 Bytes (Header)
-  if (SerialDown.available() >= 2) {
+void recv_data_from_serialdown() {
+    SerialDown.listen();
+
+    // Wir warten NUR auf die ersten 2 Bytes (Header)
+    if (SerialDown.available() >= 2) {
     
-    byte start = SerialDown.read(); // Byte 1: Startkennung (0xAA)
-    byte type  = SerialDown.read(); // Byte 2: Der Typ-Entscheider
+        byte start = SerialDown.read(); // Byte 1: Startkennung (0xAA)
+        byte type  = SerialDown.read(); // Byte 2: Der Typ-Entscheider
 
-    if (start == 0xAA) {
-        // bestaetigungsnachricht an den absaender schicken
-        SerialUp.write(ACK_SIGNAL);
-      
-        // wenn es sich um ein Scan Packet handelt wrd das ausgefuehrt
-        if (type == TYPE_SCAN) {
-            // Jetzt wissen wir: Es ist ein ScanPacket!
-            // Wir warten, bis der REST (sizeof(ScanPacket) - 2) da ist
-            while(SerialDown.available() < (sizeof(ScanPacket) - 2));
-            
-            struct ScanPacket sp;
-            sp.startByte = start;
-            sp.type = type;
-            // Jetzt lesen wir den Rest direkt in die Scan-Struktur
-            SerialDown.readBytes((byte*)&sp.activeUnits, sizeof(ScanPacket) - 2);
-            
-            handleScanPacket(sp);
+        if (start == 0xAA) {
+            // bestaetigungsnachricht an den absaender schicken
+            SerialUp.write(ACK_SIGNAL);
+        
+            // wenn es sich um ein Scan Packet handelt wrd das ausgefuehrt
+            if (type == TYPE_SCAN) {
+                // Jetzt wissen wir: Es ist ein ScanPacket!
+                // Wir warten, bis der REST (sizeof(ScanPacket) - 2) da ist
+                while(SerialDown.available() < (sizeof(ScanPacket) - 2));
+                
+                struct ScanPacket sp;
+                sp.startByte = start;
+                sp.type = type;
 
-            delay(100);
+                // Jetzt lesen wir den Rest direkt in die Scan-Struktur
+                SerialDown.readBytes((byte*)&sp.activeUnits, sizeof(ScanPacket) - 2);
+                
+                handleScanPacket(sp);
 
-            if (SerialUp.available() >= 2) {
-                continue;
-            } else {
+                delay(100);
+
+                if (forwardAndCheckIfLast() = true) {
+                    printf("Es handelt sich nicht um die letzte Einheit!\n");
+                } else {
+                    printf("Es handelt sich um die Letzte Einheit Packet wurde in die andere Richtung weitergegeben\n");
+                }
+
+            } 
+
+            // wenn es sich um ein Balance Packet handelt wird das ausgefuehrt
+            else if (type == TYPE_BALANCE) {
                 break;
-                // hier kommt die Logik fuer das Ruecksenden des Abfrage Packets rein
             }
-        } 
-
-        // wenn es sich um ein Balance Packet handelt wird das ausgefuehrt
-        else if (type == TYPE_BALANCE) {
-            break;
         }
-    }
   }
 }
 
@@ -80,5 +116,5 @@ void setup() {
 }
 
 void loop() {
-    recv_data();
+    recv_data_from_serialdown();
 }

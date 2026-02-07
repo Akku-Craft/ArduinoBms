@@ -40,10 +40,10 @@ enum PacketType {
   TYPE_BALANCE,  // Befehl (Balancing ein/aus)
   TYPE_EMERGENCY // Sofort-Aus für alle
 };
-
+   
 struct CellData {
 // Messwerte
-  int voltage_mV;         // Aktuelle Gesamtzellspannung in Millivolt
+  int voltag  e_mV;         // Aktuelle Gesamtzellspannung in Millivolt
   int voltage_Cell1;      // Zellspannung der ersten Zelle
   int voltage_Cell2;      // Zellspannung der zweiten Zelle
   int temperature_C;      // Aktuelle Zelltemperatur in Grad Celsius
