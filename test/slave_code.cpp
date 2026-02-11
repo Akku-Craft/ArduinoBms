@@ -21,23 +21,17 @@ bool forwardAndCheckIfLast(ScanPacket &p) {
 
     while (millis() - startWait < 50) {
         if (SerialUp.available()) {
-        if (SerialUp.read() == ACK_SIGNAL) {
-            ackReceived = true;
-            break;
-        }
+            if (SerialUp.read() == ACK_SIGNAL) {
+                ackReceived = true;
+                break;
+            }
         }
     }
 
     // 4. Auswertung
     if (!ackReceived) {
-        // Keiner hat geantwortet -> Wir sind das Ende der Kette!
-        Serial.println("Kein Nachbar gefunden. Ich bin die letzte Einheit.");
         SerialUp.write((byte*)&p, sizeof(ScanPacket));
         return true; 
-    } else {
-        // Nachbar ist da und hat das Paket übernommen
-        Serial.println("Paket an Nachfolger übergeben.");
-        return false;
     }
 }
 
@@ -94,8 +88,21 @@ void recv_data_from_serialdown() {
 
                 delay(100);
 
-                if (forwardAndCheckIfLast() = true) {
-                    printf("Es handelt sich nicht um die letzte Einheit!\n");
+                if (forwardAndCheckIfLast(sp) == true) {
+                    unsigned long returnTimeout = millis();
+                    bool packetReturned = false;
+
+                    // Blockierende Schleife: Wir warten bis zu 2 Sekunden auf das Paket
+                    while (millis() - returnTimeout < 2000) {
+                        if (SerialUp.available() >= sizeof(ScanPacket)) {
+                            struct ScanPacket returningPacket;
+                            SerialUp.readBytes((byte*)&returningPacket, sizeof(ScanPacket));
+                            
+                            // Paket nach OBEN (Head) weiterreichen
+                            SerialUp.write((byte*)&returningPacket, sizeof(ScanPacket));
+                        }
+
+                    }
                 } else {
                     printf("Es handelt sich um die Letzte Einheit Packet wurde in die andere Richtung weitergegeben\n");
                 }
@@ -107,8 +114,9 @@ void recv_data_from_serialdown() {
                 break;
             }
         }
-  }
+    }
 }
+
 
 void setup() {
     SerialUp.begin(9600);
@@ -117,4 +125,5 @@ void setup() {
 
 void loop() {
     recv_data_from_serialdown();
+    recv_data_from_serialup();
 }
