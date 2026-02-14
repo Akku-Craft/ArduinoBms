@@ -60,7 +60,7 @@ void register_and_check_units() {
 
     for (int i = 0; i < currentUnitCount; i++) {
       // Wir kopieren die Daten in unser permanentes Units-Array
-      Units[i] = incoming.data[i];
+      Units[i] = incoming.units[i];
       Units[i].isConnected = true;
     }
 
