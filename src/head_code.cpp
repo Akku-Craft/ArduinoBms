@@ -146,7 +146,9 @@ void setup() {
 void loop() {
 
   // bevor man andere Einheiten regestrieren und einlesen kann muss ma erst die erste Einheit hinzufuegen
-  read_Data_for_first_unit();
+  read_Data_for_own_unit();
+
+  // hier muss die erste einheit regestriert werden
 
   register_and_check_units();
 

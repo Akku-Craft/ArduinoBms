@@ -5,7 +5,9 @@
 #include <Arduino.h>
 #include "BMS_Definitions.h"
 
-void read_Data_for_first_unit() {
+measure_Cell_Data read_Data_for_own_unit() {
+
+  struct measure_Cell_Data cell;
   
   // 1. MESSUNG (Durchschnitt aus 20 Werten für Stabilität)
   float rawA1 = 0;
@@ -28,15 +30,11 @@ void read_Data_for_first_unit() {
   // Zelle 2 berechnen (Differenz)
   float vZelle2 = vGesamt - vZelle1;
 
-  Units[0].voltage_mV = vGesamt;
-  Units[0].voltage_Cell1 = vZelle1;
-  Units[0].voltage_Cell2 = vZelle2;
+  cell.voltage_mV = vGesamt;
+  cell.voltage_Cell1 = vZelle1;
+  cell.voltage_Cell2 = vZelle2;
 
-  Units[0].temperature_C = 25;
-  Units[0].internal_ID = i;
-  Units[0].is_balancing = false;
-
-  currentUnitCount = 1:
+  return cell;
 
 }
 
@@ -66,25 +64,5 @@ void update_System_Behavior_for_first_Unit() {
   
 }
 
-// diese Funktion fuehrt alles fuer die erste Eiinheit aus
-void execute_Hardware_Controls_for_first_Unit() {
-
-  // hier wird die Balacing Variable geprueft
-  if (Units[i].is_balancing_Z1) {
-    digitalWrite(PIN_MOSFET_ZELLE1, HIGH);
-  } else {
-    digitalWrite(PIN_MOSFET_ZELLE1, LOW);
-  }
-
-  // Balancing für Zelle 2
-  if (Units[i].is_balancing_Z2) {
-    digitalWrite(PIN_MOSFET_ZELLE2, HIGH);
-  } else {
-    digitalWrite(PIN_MOSFET_ZELLE2, LOW);
-  }
-
-
-  
-}
 
 #endif
