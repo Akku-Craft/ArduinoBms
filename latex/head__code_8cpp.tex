@@ -1,0 +1,146 @@
+\doxysection{src/head\+\_\+code.cpp File Reference}
+\hypertarget{head__code_8cpp}{}\label{head__code_8cpp}\index{src/head\_code.cpp@{src/head\_code.cpp}}
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \#include "{}BMS\+\_\+\+Definitions.\+h"{}}\newline
+{\ttfamily \#include "{}local\+\_\+functions.\+cpp"{}}\newline
+{\ttfamily \#include $<$Software\+Serial.\+h$>$}\newline
+Include dependency graph for head\+\_\+code.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{head__code_8cpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=197pt]{head__code_8cpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Software\+Serial \mbox{\hyperlink{head__code_8cpp_a5246ec23d5154f850c0d6bcd5f0d8b28}{my\+Serial}} (10, 11)
+\item 
+void \mbox{\hyperlink{head__code_8cpp_a5eef255e031438815b8d01ff86297816}{register\+\_\+and\+\_\+check\+\_\+units}} ()
+\item 
+void \mbox{\hyperlink{head__code_8cpp_a54744844cb876907b268b8a899d10997}{print\+\_\+\+BMS\+\_\+\+Status}} ()
+\item 
+void \mbox{\hyperlink{head__code_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\item 
+void \mbox{\hyperlink{head__code_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{head__code_8cpp_a1595e9ad586c42da3e642011062333c8}{current\+Unit\+Count}} = 0
+\item 
+\mbox{\hyperlink{BMS__Definitions_8h_a2cc3130d597bd9e7880b6497496b4f35}{System\+Status}} \mbox{\hyperlink{head__code_8cpp_a9f3b27444c3d0a0c0c6359dff98b71c0}{currently\+\_\+status}}
+\item 
+\mbox{\hyperlink{structCellData}{Cell\+Data}} \mbox{\hyperlink{head__code_8cpp_aaa77ef71859afe722986357b46304de6}{Units}} \mbox{[}\mbox{\hyperlink{BMS__Definitions_8h_a7cfb67162d1c27efd40371d00adfb0b8}{MAX\+\_\+\+UNITS}}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{head__code_8cpp_afe461d27b9c48d5921c00d521181f12f}\label{head__code_8cpp_afe461d27b9c48d5921c00d521181f12f} 
+\index{head\_code.cpp@{head\_code.cpp}!loop@{loop}}
+\index{loop@{loop}!head\_code.cpp@{head\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{head__code_8cpp_afe461d27b9c48d5921c00d521181f12f_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{head__code_8cpp_a5246ec23d5154f850c0d6bcd5f0d8b28}\label{head__code_8cpp_a5246ec23d5154f850c0d6bcd5f0d8b28} 
+\index{head\_code.cpp@{head\_code.cpp}!mySerial@{mySerial}}
+\index{mySerial@{mySerial}!head\_code.cpp@{head\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{mySerial()}{mySerial()}}
+{\footnotesize\ttfamily Software\+Serial my\+Serial (\begin{DoxyParamCaption}\item[{10}]{,  }\item[{11}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=343pt]{head__code_8cpp_a5246ec23d5154f850c0d6bcd5f0d8b28_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{head__code_8cpp_a54744844cb876907b268b8a899d10997}\label{head__code_8cpp_a54744844cb876907b268b8a899d10997} 
+\index{head\_code.cpp@{head\_code.cpp}!print\_BMS\_Status@{print\_BMS\_Status}}
+\index{print\_BMS\_Status@{print\_BMS\_Status}!head\_code.cpp@{head\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{print\_BMS\_Status()}{print\_BMS\_Status()}}
+{\footnotesize\ttfamily void print\+\_\+\+BMS\+\_\+\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=247pt]{head__code_8cpp_a54744844cb876907b268b8a899d10997_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{head__code_8cpp_a5eef255e031438815b8d01ff86297816}\label{head__code_8cpp_a5eef255e031438815b8d01ff86297816} 
+\index{head\_code.cpp@{head\_code.cpp}!register\_and\_check\_units@{register\_and\_check\_units}}
+\index{register\_and\_check\_units@{register\_and\_check\_units}!head\_code.cpp@{head\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{register\_and\_check\_units()}{register\_and\_check\_units()}}
+{\footnotesize\ttfamily void register\+\_\+and\+\_\+check\+\_\+units (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{head__code_8cpp_a5eef255e031438815b8d01ff86297816_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{head__code_8cpp_a5eef255e031438815b8d01ff86297816_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{head__code_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{head__code_8cpp_a4fc01d736fe50cf5b977f755b675f11d} 
+\index{head\_code.cpp@{head\_code.cpp}!setup@{setup}}
+\index{setup@{setup}!head\_code.cpp@{head\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=212pt]{head__code_8cpp_a4fc01d736fe50cf5b977f755b675f11d_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{head__code_8cpp_a9f3b27444c3d0a0c0c6359dff98b71c0}\label{head__code_8cpp_a9f3b27444c3d0a0c0c6359dff98b71c0} 
+\index{head\_code.cpp@{head\_code.cpp}!currently\_status@{currently\_status}}
+\index{currently\_status@{currently\_status}!head\_code.cpp@{head\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{currently\_status}{currently\_status}}
+{\footnotesize\ttfamily \mbox{\hyperlink{BMS__Definitions_8h_a2cc3130d597bd9e7880b6497496b4f35}{System\+Status}} currently\+\_\+status}
+
+\Hypertarget{head__code_8cpp_a1595e9ad586c42da3e642011062333c8}\label{head__code_8cpp_a1595e9ad586c42da3e642011062333c8} 
+\index{head\_code.cpp@{head\_code.cpp}!currentUnitCount@{currentUnitCount}}
+\index{currentUnitCount@{currentUnitCount}!head\_code.cpp@{head\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{currentUnitCount}{currentUnitCount}}
+{\footnotesize\ttfamily int current\+Unit\+Count = 0}
+
+\Hypertarget{head__code_8cpp_aaa77ef71859afe722986357b46304de6}\label{head__code_8cpp_aaa77ef71859afe722986357b46304de6} 
+\index{head\_code.cpp@{head\_code.cpp}!Units@{Units}}
+\index{Units@{Units}!head\_code.cpp@{head\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{Units}{Units}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structCellData}{Cell\+Data}} Units\mbox{[}\mbox{\hyperlink{BMS__Definitions_8h_a7cfb67162d1c27efd40371d00adfb0b8}{MAX\+\_\+\+UNITS}}\mbox{]}}
+

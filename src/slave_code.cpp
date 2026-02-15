@@ -124,5 +124,5 @@ void setup() {
 
 void loop() {
     recv_data_from_serialdown();
-    recv_data_from_serialup();
+
 }

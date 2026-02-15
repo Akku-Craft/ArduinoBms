@@ -1,0 +1,148 @@
+\doxysection{src/slave\+\_\+code.cpp File Reference}
+\hypertarget{slave__code_8cpp}{}\label{slave__code_8cpp}\index{src/slave\_code.cpp@{src/slave\_code.cpp}}
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \#include "{}BMS\+\_\+\+Definitions.\+h"{}}\newline
+{\ttfamily \#include "{}head\+\_\+local\+\_\+functions.\+cpp"{}}\newline
+{\ttfamily \#include $<$Software\+Serial.\+h$>$}\newline
+Include dependency graph for slave\+\_\+code.\+cpp\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{slave__code_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Software\+Serial \mbox{\hyperlink{slave__code_8cpp_afe50f5293d72d0c17e05c956b4e35c89}{Serial\+Down}} (10, 11)
+\item 
+Software\+Serial \mbox{\hyperlink{slave__code_8cpp_a88fa6c7d5b76dca736f493bc7a710395}{Serial\+Up}} (8, 9)
+\item 
+bool \mbox{\hyperlink{slave__code_8cpp_a0bff175b83ac72480e471414b815b4a2}{forward\+And\+Check\+If\+Last}} (\mbox{\hyperlink{structScanPacket}{Scan\+Packet}} \&p)
+\item 
+void \mbox{\hyperlink{slave__code_8cpp_ad642cc382ba3ae2d5bd820d2feae1da6}{handle\+Scan\+Packet}} (Packet \&p)
+\item 
+void \mbox{\hyperlink{slave__code_8cpp_afab6d1c40e58b681c0aed4b428fe7648}{recv\+\_\+data\+\_\+from\+\_\+serialdown}} ()
+\item 
+void \mbox{\hyperlink{slave__code_8cpp_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\item 
+void \mbox{\hyperlink{slave__code_8cpp_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{slave__code_8cpp_a0bff175b83ac72480e471414b815b4a2}\label{slave__code_8cpp_a0bff175b83ac72480e471414b815b4a2} 
+\index{slave\_code.cpp@{slave\_code.cpp}!forwardAndCheckIfLast@{forwardAndCheckIfLast}}
+\index{forwardAndCheckIfLast@{forwardAndCheckIfLast}!slave\_code.cpp@{slave\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{forwardAndCheckIfLast()}{forwardAndCheckIfLast()}}
+{\footnotesize\ttfamily bool forward\+And\+Check\+If\+Last (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structScanPacket}{Scan\+Packet}} \&}]{p }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{slave__code_8cpp_a0bff175b83ac72480e471414b815b4a2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{slave__code_8cpp_a0bff175b83ac72480e471414b815b4a2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{slave__code_8cpp_ad642cc382ba3ae2d5bd820d2feae1da6}\label{slave__code_8cpp_ad642cc382ba3ae2d5bd820d2feae1da6} 
+\index{slave\_code.cpp@{slave\_code.cpp}!handleScanPacket@{handleScanPacket}}
+\index{handleScanPacket@{handleScanPacket}!slave\_code.cpp@{slave\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{handleScanPacket()}{handleScanPacket()}}
+{\footnotesize\ttfamily void handle\+Scan\+Packet (\begin{DoxyParamCaption}\item[{Packet \&}]{p }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{slave__code_8cpp_ad642cc382ba3ae2d5bd820d2feae1da6_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{slave__code_8cpp_afe461d27b9c48d5921c00d521181f12f}\label{slave__code_8cpp_afe461d27b9c48d5921c00d521181f12f} 
+\index{slave\_code.cpp@{slave\_code.cpp}!loop@{loop}}
+\index{loop@{loop}!slave\_code.cpp@{slave\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{slave__code_8cpp_afe461d27b9c48d5921c00d521181f12f_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{slave__code_8cpp_afab6d1c40e58b681c0aed4b428fe7648}\label{slave__code_8cpp_afab6d1c40e58b681c0aed4b428fe7648} 
+\index{slave\_code.cpp@{slave\_code.cpp}!recv\_data\_from\_serialdown@{recv\_data\_from\_serialdown}}
+\index{recv\_data\_from\_serialdown@{recv\_data\_from\_serialdown}!slave\_code.cpp@{slave\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{recv\_data\_from\_serialdown()}{recv\_data\_from\_serialdown()}}
+{\footnotesize\ttfamily void recv\+\_\+data\+\_\+from\+\_\+serialdown (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{slave__code_8cpp_afab6d1c40e58b681c0aed4b428fe7648_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=287pt]{slave__code_8cpp_afab6d1c40e58b681c0aed4b428fe7648_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{slave__code_8cpp_afe50f5293d72d0c17e05c956b4e35c89}\label{slave__code_8cpp_afe50f5293d72d0c17e05c956b4e35c89} 
+\index{slave\_code.cpp@{slave\_code.cpp}!SerialDown@{SerialDown}}
+\index{SerialDown@{SerialDown}!slave\_code.cpp@{slave\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{SerialDown()}{SerialDown()}}
+{\footnotesize\ttfamily Software\+Serial Serial\+Down (\begin{DoxyParamCaption}\item[{10}]{,  }\item[{11}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{slave__code_8cpp_afe50f5293d72d0c17e05c956b4e35c89_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{slave__code_8cpp_a88fa6c7d5b76dca736f493bc7a710395}\label{slave__code_8cpp_a88fa6c7d5b76dca736f493bc7a710395} 
+\index{slave\_code.cpp@{slave\_code.cpp}!SerialUp@{SerialUp}}
+\index{SerialUp@{SerialUp}!slave\_code.cpp@{slave\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{SerialUp()}{SerialUp()}}
+{\footnotesize\ttfamily Software\+Serial Serial\+Up (\begin{DoxyParamCaption}\item[{8}]{,  }\item[{9}]{ }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{slave__code_8cpp_a88fa6c7d5b76dca736f493bc7a710395_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{slave__code_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{slave__code_8cpp_a4fc01d736fe50cf5b977f755b675f11d} 
+\index{slave\_code.cpp@{slave\_code.cpp}!setup@{setup}}
+\index{setup@{setup}!slave\_code.cpp@{slave\_code.cpp}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=224pt]{slave__code_8cpp_a4fc01d736fe50cf5b977f755b675f11d_cgraph}
+\end{center}
+\end{figure}

@@ -1,0 +1,15 @@
+# Damit Graphen gezeichnet werden (benötigt Graphviz)
+HAVE_DOT               = YES
+
+# Zeigt die Beziehungen zwischen den Dateien (.h und .cpp)
+INCLUDE_GRAPH          = YES
+
+# Erstellt automatisch Flussdiagramme für Funktionen
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+
+# Scannt alle Unterordner (falls vorhanden)
+RECURSIVE              = YES
+
+# Extrahiert alles, auch wenn du keine speziellen Kommentare schreibst
+EXTRACT_ALL            = YES
