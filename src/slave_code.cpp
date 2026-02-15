@@ -47,7 +47,6 @@ void handleScanPacket(Packet &p) {
     // Eigene Messwerte eintragen (hier die Variablen deiner Messfunktion)
     p.data[myPos].voltage_Cell1 = read_Cell1(); 
     p.data[myPos].voltage_Cell2 = read_Cell2();
-    p.data[myPos].internal_ID = myPos;
     p.data[myPos].isConnected = true;
 
     // Den Zähler für den nächsten Nachbarn erhöhen

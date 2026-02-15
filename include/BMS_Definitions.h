@@ -49,11 +49,9 @@ struct CellData {
   int voltage_Cell2;      // Zellspannung der zweiten Zelle
   int temperature_C;      // Aktuelle Zelltemperatur in Grad Celsius
   // Status & Steuerung
-  byte internal_ID;       // Die interne Kanal-ID im Monitor-IC
   bool is_balancing_1;      // TRUE, wenn der Balancierwiderstand dieser Zelle aktiv ist
   bool is_balancing_2;      // TRUE, wenn der Balancierwiderstand dieser Zelle aktiv ist
   SystemStatus status;
-  bool is_connevted;
 };
 
 // die Struktur ehthaelt alle werte fuer das ScanPacket

@@ -149,6 +149,17 @@ void loop() {
   read_Data_for_own_unit();
 
   // hier muss die erste einheit regestriert werden
+  struct CellData first_unit;
+  first_unit = read_Data_for_own_unit();
+
+  Units[0].voltage_mV = first_unit.voltage_mV;
+  Units[0].voltage_Cell1 = first_unit.voltage_Cell1;
+  Units[0].voltage_Cell2 = first_unit.voltage_Cell2;
+  Units[0].temperature_C = first_unit.temperature_C;
+
+  Units[0].is_balancing_1 = false;
+  Units[0].is_balancing_2 = false;
+  Units[0].status = STATUS_IDLE;
 
   register_and_check_units();
 

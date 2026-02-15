@@ -34,6 +34,8 @@ measure_Cell_Data read_Data_for_own_unit() {
   cell.voltage_Cell1 = vZelle1;
   cell.voltage_Cell2 = vZelle2;
 
+  cell.temperature_C = 25;
+
   return cell;
 
 }
