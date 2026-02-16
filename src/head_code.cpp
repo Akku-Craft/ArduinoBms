@@ -68,6 +68,7 @@ void register_and_check_units() {
     for (int i = currentUnitCount; i < MAX_UNITS; i++) {
       Units[i].voltage_Cell1 = 0.0;
       Units[i].voltage_Cell2 = 0.0;
+      Units[i].temperature_C = 0.0;
       Units[i].voltage_mV = 0;
       Units[i].isConnected = false;
       Units[i].is_balancing_Z1 = false;
@@ -84,6 +85,7 @@ void register_and_check_units() {
       Units[i].voltage_Cell1 = 0.0;
       Units[i].voltage_Cell2 = 0.0;
       Units[i].voltage_mV = 0;
+      Units[i].temperature_C = 0;
       Units[i].isConnected = false;
       Units[i].is_balancing_Z1 = false;
       Units[i].is_balancing_Z2 = false;

@@ -1,11 +1,16 @@
 #include <Arduino.h>
 #include "BMS_Definitions.h"
-#include "head_local_functions.cpp"
+#include "local_functions.cpp"
 #include <SoftwareSerial.h>
 
+// diese Struktur represantiert Lokal die Einheit
+struct CellData own_cell;
+
+// hier werden die Pins zur Kommunikation definiert
 SoftwareSerial SerialDown(10, 11); // fuer die Kommunikation die Richtung Slaves geht
 SoftwareSerial SerialUp(8, 9); // fuer die kommunikation die Richtung Head geht
 
+// diese Funktion gibt das Packet an die nächst untere Einheit weiter falls keine Rüchmeldung erfolgt handelt es sich um die Letzte und das Pakcet wird wieder Richtung Head gegeben
 bool forwardAndCheckIfLast(ScanPacket &p) {
     // 1. Buffer leeren, um keine alten ACKs fälschlicherweise zu lesen
     while(SerialDown.available()) SerialDown.read();
@@ -45,8 +50,10 @@ void handleScanPacket(Packet &p) {
   if (myPos < MAX_UNITS) {
     
     // Eigene Messwerte eintragen (hier die Variablen deiner Messfunktion)
-    p.data[myPos].voltage_Cell1 = read_Cell1(); 
-    p.data[myPos].voltage_Cell2 = read_Cell2();
+    p.data[myPos].voltage_Cell1 = own_cell.voltage_Cell1; 
+    p.data[myPos].voltage_Cell2 = own_cell.voltage_Cell2;
+    p.data[myPos].voltage_mV = own_cell.voltage_mV;
+    p.data[myPos].temperature_C = own_cell.temperature_C;
     p.data[myPos].isConnected = true;
 
     // Den Zähler für den nächsten Nachbarn erhöhen
@@ -75,6 +82,14 @@ void recv_data_from_serialdown() {
                 // Jetzt wissen wir: Es ist ein ScanPacket!
                 // Wir warten, bis der REST (sizeof(ScanPacket) - 2) da ist
                 while(SerialDown.available() < (sizeof(ScanPacket) - 2));
+
+                struct measure_Cell_Data cell;
+                cell = read_Data_for_own_unit();
+
+                own_cell.voltage_mV = cell.voltage_mV;
+                own_cell.voltage_Cell1 = cell.voltage_Cell1;
+                own_cell.voltage_Cell2 = cell.voltage_Cell2;
+                own_cell.temperature = cell.temperature_C;
                 
                 struct ScanPacket sp;
                 sp.startByte = start;
@@ -120,6 +135,10 @@ void recv_data_from_serialdown() {
 void setup() {
     SerialUp.begin(9600);
     SerialDown.begin(9600);
+
+    own_cell.is_balancing_1 = false;
+    own_cell.is_balancing_2 = false;
+
 }
 
 void loop() {

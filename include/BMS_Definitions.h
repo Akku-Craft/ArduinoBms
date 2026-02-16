@@ -58,6 +58,7 @@ struct CellData {
 struct SingleUnitData {
   uint16_t vCell1_mV;    // z.B. 3750 für 3.75V
   uint16_t vCell2_mV;
+  uint16_t voltage_mV;
   int16_t temp_C;
   int number;
 };
