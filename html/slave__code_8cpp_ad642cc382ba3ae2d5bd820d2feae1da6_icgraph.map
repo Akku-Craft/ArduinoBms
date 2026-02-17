@@ -1,7 +1,0 @@
-<map id="handleScanPacket" name="handleScanPacket">
-<area shape="rect" id="Node000001" title=" " alt="" coords="329,5,460,31"/>
-<area shape="rect" id="Node000002" href="$slave__code_8cpp.html#afab6d1c40e58b681c0aed4b428fe7648" title=" " alt="" coords="100,5,281,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="316,21,281,21,281,15,316,15"/>
-<area shape="rect" id="Node000003" href="$slave__code_8cpp.html#afe461d27b9c48d5921c00d521181f12f" title=" " alt="" coords="5,5,52,31"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="86,21,53,21,53,15,86,15"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="forwardAndCheckIfLast" name="forwardAndCheckIfLast">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,31,164,56"/>
-<area shape="rect" id="Node000002" href="$slave__code_8cpp.html#afe50f5293d72d0c17e05c956b4e35c89" title=" " alt="" coords="212,5,301,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="164,29,198,24,199,29,165,34"/>
-<area shape="rect" id="Node000003" href="$slave__code_8cpp.html#a88fa6c7d5b76dca736f493bc7a710395" title=" " alt="" coords="221,55,293,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="165,52,208,58,207,63,164,57"/>
-</map>

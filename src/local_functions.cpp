@@ -63,7 +63,33 @@ void update_System_Behavior_for_first_Unit() {
     Units[i].is_balancing_Z1 = false;
     Units[i].is_balancing_Z2 = false;
   }
-  
+
+}
+
+
+void run_local_balancing(CellData &data, float targetVoltage) {
+  // Hysterese-Wert (verhindert Flattern der MOSFETs bei exakt 3.6V)
+  const float HYSTERESIS = 0.05; 
+
+  // --- Zelle 1 Check ---
+  if (data.voltage_Cell1 > targetVoltage) {
+    digitalWrite(PIN_MOSFET_Z1, HIGH);
+    data.is_balancing_Z1 = true;
+  } 
+  else if (data.voltage_Cell1 < (targetVoltage - HYSTERESIS)) {
+    digitalWrite(PIN_MOSFET_Z1, LOW);
+    data.is_balancing_Z1 = false;
+  }
+
+  // --- Zelle 2 Check ---
+  if (data.voltage_Cell2 > targetVoltage) {
+    digitalWrite(PIN_MOSFET_Z2, HIGH);
+    data.is_balancing_Z2 = true;
+  } 
+  else if (data.voltage_Cell2 < (targetVoltage - HYSTERESIS)) {
+    digitalWrite(PIN_MOSFET_Z2, LOW);
+    data.is_balancing_Z2 = false;
+  }
 }
 
 

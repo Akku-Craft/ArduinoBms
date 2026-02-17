@@ -1,0 +1,42 @@
+<mxfile host="65bd71144e">
+    <diagram id="balancing-flow-v2" name="Balancing Ablauf Optimiert">
+        <mxGraphModel dx="1400" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1371" pageHeight="516" math="0" shadow="1">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                
+                <mxCell id="title" value="PROZESS: AKTIVES ZELL-BALANCING" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=22;fontStyle=1;arcSize=50;shadow=1;" vertex="1" parent="1">
+                    <mxGeometry x="435.5" y="20" width="500" height="60" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="data_source" value="&lt;b&gt;DATENQUELLE&lt;/b&gt;&lt;br&gt;struct CellData Units[]&lt;br&gt;&lt;hr&gt;Enthält aktuelle Zellspannungen aller Slaves." style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="150" width="180" height="120" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="logic_unit" value="&lt;b&gt;ENTSCHEIDUNGS-LOGIK&lt;/b&gt;&lt;br&gt;void Balancing()&lt;br&gt;&lt;br&gt;• Permanente Überprüfung der Loop&lt;br&gt;• Vergleich: Spannung vs. Schwellwert&lt;br&gt;• Trigger: Sende Befehl bei Abweichung" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=10;shadow=1;" vertex="1" parent="1">
+                    <mxGeometry x="485.5" y="160" width="400" height="150" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="hardware_action" value="&lt;b&gt;SLAVE REAKTION&lt;/b&gt;&lt;br&gt;recv_data_from_serialdown()&lt;br&gt;&lt;br&gt;• Empfang des Balancing-Pakets&lt;br&gt;• Schalten der Balancing-MOSFETs&lt;br&gt;• Energie wird kontrolliert verbraten&lt;br&gt;• Update beim nächsten ScanPacket" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=10;shadow=1;" vertex="1" parent="1">
+                    <mxGeometry x="1030" y="160" width="300" height="180" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="flow_1" value="Daten auslesen" style="endArrow=block;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="data_source" target="logic_unit">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="flow_2" value="Sende Korrektur-Paket" style="endArrow=block;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="logic_unit" target="hardware_action">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="flow_back" value="Feedback Loop (Nächster Scan)" style="endArrow=block;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=1;strokeWidth=1;dashed=1;endFill=1;edgeStyle=orthogonalEdgeStyle;curved=1;strokeColor=#82b366;" edge="1" parent="1" source="hardware_action" target="data_source">
+                    <mxGeometry x="-0.027" y="20" width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1180" y="450" as="sourcePoint"/>
+                        <mxPoint x="130" y="450" as="targetPoint"/>
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
