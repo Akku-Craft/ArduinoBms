@@ -1,0 +1,45 @@
+<mxfile host="65bd71144e">
+    <diagram id="bms-functional-blocks" name="BMS Units and Functions">
+        <mxGraphModel dx="1491" dy="511" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1491" pageHeight="511" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                
+                <mxCell id="unit_head" value="Head (Steuereinheit)" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;startSize=30;" vertex="1" parent="1">
+                    <mxGeometry x="10" y="110" width="400" height="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="f_head_send" value="Funktion: register_and_check_unit()&#10;Aufgabe: Struktur ScanPacket wird ueber die Serial Ports gesendet" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="unit_head">
+                    <mxGeometry x="10" y="50" width="380" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="f_head_recv" value="Funktion: register_and_check_unit()&#10;Aufgabe: Packet wird empfangen und in das Arry Units[] eingetragen" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="unit_head">
+                    <mxGeometry x="10" y="150" width="380" height="60" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="unit_cell" value="Einheit / Zelle" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;startSize=30;" vertex="1" parent="1">
+                    <mxGeometry x="1090" y="110" width="400" height="400" as="geometry"/>
+                </mxCell>
+                <mxCell id="f_cell_logic" value="Funktion: recv_data_from_serialdown&#10;Aufgabe: Struktur ScanPacket wird empfangen&#10;&#10;Funktion: handleScanPacket()&#10;Aufgabe: Daten wie z.B. Zellspannung wird in das Packet geschrieben&#10;&#10;Funktion: forwardAndCheckIfLast()&#10;Aufgabe: Packet wird weitergegeben. Wenn kein ACK kommt, ist dies die letzte Einheit und das Packet wird umgekehrt." style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="unit_cell">
+                    <mxGeometry x="10" y="40" width="380" height="200" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="title" value="Registrieren der Zellen und Auslesen der einzelnen Daten" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=20;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="485" y="10" width="530" height="60" as="geometry"/>
+                </mxCell>
+
+                <mxCell id="arrow_out" value="ScanPacket (Request)" style="endArrow=classic;html=1;exitX=1;exitY=0.25;entryX=0;entryY=0.25;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="unit_head" target="unit_cell">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="450" y="210" as="sourcePoint"/>
+                        <mxPoint x="1050" y="210" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+
+                <mxCell id="arrow_back" value="ScanPacket mit Zell-Daten (Response)" style="endArrow=classic;html=1;exitX=0;exitY=0.75;entryX=1;entryY=0.75;strokeWidth=2;strokeColor=#82b366;" edge="1" parent="1" source="unit_cell" target="unit_head">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1050" y="410" as="sourcePoint"/>
+                        <mxPoint x="450" y="410" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
