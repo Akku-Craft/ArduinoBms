@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 // Pins für die Zellspannung
 const int pinZelle1 = A0; // Direkt verbunden (0 - 4.2V)
 const int pinZelle2 = A1; // Über Spannungsteiler 1:2 verbunden (max 8.4V -> 4.2V)
@@ -18,8 +20,8 @@ void loop() {
 
   // --- Zelle 2 messen ---
   int raw2 = analogRead(pinZelle2);
-  float voltRaw2 = (raw2 * refVoltage) / 1023.0;
-  float voltGesamt = voltRaw2 * dividerRatio; // Gesamte Pack-Spannung
+  float voltRaw2 = (raw2 * refVoltage) / 1023.0 + 2.5;
+  float voltGesamt = voltRaw2; // Gesamte Pack-Spannung
   float volt2 = voltGesamt - volt1;           // Differenz ergibt Zelle 2
 
   // --- Ausgabe ---
