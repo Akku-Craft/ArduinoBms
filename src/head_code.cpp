@@ -9,7 +9,7 @@ int currentUnitCount = 0;
 // Variable fuer das System
 SystemStatus currently_status;
 
-// Array in dehnen alle Units gespecihert sind
+// Array in dehnen alle Units gespecihert sinddx
 CellData Units[MAX_UNITS];
 
 // hier werden die Pins zum Senden und Empfangen festgelegt
@@ -97,6 +97,25 @@ void register_and_check_units() {
 
 }
 
+void check_balancing() {
+  for (i = 0; sizeof(Units); i++) {
+    if (Units[i].voltage_mV < gesamt_spannung) {
+      // logik fuer das senden des Befehls Packetes
+      break;
+    }
+
+    if (Units[i].voltage_Cell1 < gesamt_spannung) {
+      // logik fuer das senden des Befehls Packetes
+      break;
+    }
+
+    if (Units[i].voltage_Cell2 < gesamt_spannung) {
+      // logik fuer das senden des Befehls Packetes
+      break;
+    }
+  }
+} 
+
 
 void print_BMS_Status() {
   Serial.println("\n--- Aktueller BMS Status ---");
@@ -144,26 +163,34 @@ void setup() {
 
 }
 
+// Zeitsteuerung
+unsigned long lastScanTime = 0;
+const unsigned long scanInterval = 5000; // 5000ms = 5 Sekunden
+
 // Die Hauptschleife läuft unendlich.
 void loop() {
 
-  // bevor man andere Einheiten regestrieren und einlesen kann muss ma erst die erste Einheit hinzufuegen
-  read_Data_for_own_unit();
+  // alle 5 Sekunden wird eine Messung durchgefuehrt
+  if (currentTime - lastScanTime >= scanInterval) {
+    // bevor man andere Einheiten regestrieren und einlesen kann muss ma erst die erste Einheit hinzufuegen
+    read_Data_for_own_unit();
 
-  // hier muss die erste einheit regestriert werden
-  struct CellData first_unit;
-  first_unit = read_Data_for_own_unit();
+    // hier muss die erste einheit regestriert werden
+    struct CellData first_unit;
+    first_unit = read_Data_for_own_unit();
 
-  Units[0].voltage_mV = first_unit.voltage_mV;
-  Units[0].voltage_Cell1 = first_unit.voltage_Cell1;
-  Units[0].voltage_Cell2 = first_unit.voltage_Cell2;
-  Units[0].temperature_C = first_unit.temperature_C;
+    Units[0].voltage_mV = first_unit.voltage_mV;
+    Units[0].voltage_Cell1 = first_unit.voltage_Cell1;
+    Units[0].voltage_Cell2 = first_unit.voltage_Cell2;
+    Units[0].temperature_C = first_unit.temperature_C;
 
-  Units[0].is_balancing_1 = false;
-  Units[0].is_balancing_2 = false;
-  Units[0].status = STATUS_IDLE;
+    Units[0].is_balancing_1 = false;
+    Units[0].is_balancing_2 = false;
+    Units[0].status = STATUS_IDLE;
 
-  register_and_check_units();
+    register_and_check_units();
+  }
+
 
   print_BMS_Status();
 

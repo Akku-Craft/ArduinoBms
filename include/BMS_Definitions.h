@@ -25,6 +25,7 @@ const float MIN_VOLT_ZELLE = 3.0; // Abschaltung bei 3.0V pro Zelle
 const float MAX_VOLT_ZELLE = 4.2; // 100% bei 4.2V pro Zelle
 const float diffStart = 0.05; // Wert der Differenz bei der das Balancing gestartet werden soll
 const float diffStop = 0.01;  // Wert der Differenz bei der das Balancing gestoppy werden soll bzw. die Tolelranz die die beiden Zellen max. ahebn duerfen
+const float gesamt_spannung = 5.00;
 
 // die verschiedenen System moeglichkeiten
 enum SystemStatus{
