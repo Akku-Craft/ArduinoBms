@@ -81,5 +81,13 @@ struct measure_Cell_Data {
   int temperature_C;
 }
 
+struct balancing_Packet {
+  uint8_t startByte;
+  uint8_t type;
+  int unit;
+  bool cell1;
+  bool cell2;
+}
+
 
 #endif

@@ -98,20 +98,32 @@ void register_and_check_units() {
 }
 
 void check_balancing() {
-  for (i = 0; sizeof(Units); i++) {
+  for (int i = 0; sizeof(Units); i++) {
+
+    struct balancing_Packet p;
+
+    p.type = TYPE_BALANCE;
+    p.unit = i;
+
     if (Units[i].voltage_mV < gesamt_spannung) {
       // logik fuer das senden des Befehls Packetes
-      break;
+      mySerial.write((byte*)&p, sizeof(balancing_Packet));
     }
 
     if (Units[i].voltage_Cell1 < gesamt_spannung) {
+
+      p.cell1 = true;
+
       // logik fuer das senden des Befehls Packetes
-      break;
+      mySerial.write((byte*)&p, sizeof(balancing_Packet));
     }
 
     if (Units[i].voltage_Cell2 < gesamt_spannung) {
+
+      p.cell2 = true;
+
       // logik fuer das senden des Befehls Packetes
-      break;
+      mySerial.write((byte*)&p, sizeof(balancing_Packet));
     }
   }
 } 
