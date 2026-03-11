@@ -12,10 +12,7 @@
 // Pin definierung
 const int PIN_ZELLE1 = A1;
 const int PIN_GESAMT = A2;
-const int PIN_MAIN_SWITCH = 4; // D4 Steuert den Last-MOSFET
 const int PIN_STATUS_LED = 13; // Onboard LED
-const int PIN_MOSFET_ZELLE1 = 5;
-const int PIN_MOSFET_ZELLE2 = 6;
 const int Stromsensor_pin = A3;
 
 // Konstanten fuer die Berechnungen und das Balancing 
@@ -37,10 +34,15 @@ enum SystemStatus{
 }
 
 enum PacketType {
-  TYPE_SCAN,     // Datensammeln (Spannungen lesen)
-  TYPE_BALANCE,  // Befehl (Balancing ein/aus)
-  TYPE_EMERGENCY // Sofort-Aus für alle
+  TYPE_SCAN
 };
+
+enum Error_Messages {
+  overheating,
+  overloading,
+  underloading,
+  voltage_difference
+}
    
 // diese Struktur representiert die einzelnen Einheiten in der Head Zelle
 struct CellData {
@@ -52,6 +54,8 @@ struct CellData {
   // Status & Steuerung
   bool is_balancing_1;      // TRUE, wenn der Balancierwiderstand dieser Zelle aktiv ist
   bool is_balancing_2;      // TRUE, wenn der Balancierwiderstand dieser Zelle aktiv ist
+  // Fehlermeldungen der Zelle
+  Error_Messages error;
   SystemStatus status;
 };
 
@@ -80,14 +84,5 @@ struct measure_Cell_Data {
   int voltage_Cell2;      // Zellspannung der zweiten Zelle
   int temperature_C;
 }
-
-struct balancing_Packet {
-  uint8_t startByte;
-  uint8_t type;
-  int unit;
-  bool cell1;
-  bool cell2;
-}
-
 
 #endif

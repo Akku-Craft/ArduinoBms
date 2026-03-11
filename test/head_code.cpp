@@ -97,36 +97,32 @@ void register_and_check_units() {
 
 }
 
-void check_balancing() {
-  for (int i = 0; sizeof(Units); i++) {
-
-    struct balancing_Packet p;
-
-    p.type = TYPE_BALANCE;
-    p.unit = i;
-
-    if (Units[i].voltage_mV < gesamt_spannung) {
-      // logik fuer das senden des Befehls Packetes
-      mySerial.write((byte*)&p, sizeof(balancing_Packet));
+// diese Funktion ueberprueft ob ein Fehler in den Zellen vorliegt und handelt entsprechend
+void check_for_erros() {
+  for(int i = 0; i < MAX_UNITS; i++) {
+    // Abfrage ob eine zugrosse Spannungsdifferenz vorliegt
+    if (abs(Units[i].voltage_Cell1 - Units[0].voltage_Cell2) > diffStart) {
+      Units[i].error = voltage_difference;
     }
 
-    if (Units[i].voltage_Cell1 < gesamt_spannung) {
-
-      p.cell1 = true;
-
-      // logik fuer das senden des Befehls Packetes
-      mySerial.write((byte*)&p, sizeof(balancing_Packet));
+    // hier wird abgefragt ob die Zellen zu sehr entladen sind
+    if (Units[0].voltage_Cell1 < 2.00 || Units[0].voltage_Cell2 < 2.00) {
+      Units[0].error = underloading;
     }
 
-    if (Units[i].voltage_Cell2 < gesamt_spannung) {
-
-      p.cell2 = true;
-
-      // logik fuer das senden des Befehls Packetes
-      mySerial.write((byte*)&p, sizeof(balancing_Packet));
+    // hier wird abgefragt ob die Zellen zu voll sind
+    if (Units[0].voltage_Cell1 < 4.00 || Units[0].voltage_Cell2 < 4.00) {
+      Units[0].error = overloading;
     }
+
+    // hier wird auf ueberhitzung geprueft
+    if (Units[0].voltage_Cell1 < 4.00 || Units[0].voltage_Cell2 < 4.00) {
+      Units[0].error = overloading;
+    }
+
+    
   }
-} 
+}
 
 
 void print_BMS_Status() {
