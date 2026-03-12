@@ -6,8 +6,7 @@
 // Anzahl der aktuell verbundehnen Einheiten
 int currentUnitCount = 0;
 
-// Variable fuer das System
-SystemStatus currently_status;
+struct CellData own_unit;
 
 // Array in dehnen alle Units gespecihert sinddx
 CellData Units[MAX_UNITS];
@@ -120,35 +119,8 @@ void check_for_erros() {
       Units[0].error = overloading;
     }
 
-    
+
   }
-}
-
-
-void print_BMS_Status() {
-  Serial.println("\n--- Aktueller BMS Status ---");
-  Serial.println("ID\tStatus\tZelle 1\tZelle 2\tGesamt");
-  Serial.println("------------------------------------------");
-
-  for (int i = 0; i < currentUnitCount; i++) {
-    Serial.print(i == 0 ? "HEAD" : String(i)); // Markiert die ID 0 als Head
-    Serial.print("\t");
-
-    if (Units[i].isConnected) {
-      Serial.print("OK\t");
-      Serial.print(Units[i].voltage_Cell1, 2); // 2 Nachkommastellen
-      Serial.print("V\t");
-      Serial.print(Units[i].voltage_Cell2, 2);
-      Serial.print("V\t");
-      
-      float total = Units[i].voltage_Cell1 + Units[i].voltage_Cell2;
-      Serial.print(total, 2);
-      Serial.println("V");
-    } else {
-      Serial.println("DISCONNECTED");
-    }
-  }
-  Serial.println("------------------------------------------");
 }
 
 
@@ -160,6 +132,17 @@ void setup() {
   
   pinMode(10, INPUT);
   pinMode(11, OUTPUT);
+
+  pinMode(8, INPUT);
+  pinMode(9, OUTPUT);
+
+  pinMode(pinCS_1, OUTPUT);
+  pinMode(pinINC_1, OUTPUT);
+  pinMode(pinUD_1, OUTPUT);
+
+  pinMode(pinCS_2, OUTPUT);
+  pinMode(pinINC_2, OUTPUT);
+  pinMode(pinUD_2, OUTPUT);
 
   while(!Serial); // warten bis der Monitor offen ist
   
@@ -184,8 +167,7 @@ void loop() {
     read_Data_for_own_unit();
 
     // hier muss die erste einheit regestriert werden
-    struct CellData first_unit;
-    first_unit = read_Data_for_own_unit();
+    own_unit = read_Data_for_own_unit();
 
     Units[0].voltage_mV = first_unit.voltage_mV;
     Units[0].voltage_Cell1 = first_unit.voltage_Cell1;

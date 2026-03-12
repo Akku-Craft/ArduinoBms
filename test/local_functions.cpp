@@ -40,56 +40,87 @@ measure_Cell_Data read_Data_for_own_unit() {
 
 }
 
-// diese Funktion liest alle Regestrierten Zellen aus und legt fest was zu tun ist
-// die ergebnisse werden dan an die jeweilige Einheit gesendet wo auch die umsetzung erfolgt
-void update_System_Behavior_for_first_Unit() {
-    
-  // ueberpruefen ob balancing notwendig ist 
-  // differenz beider Akkuzellen
-  float diff = Units[i].voltage_Cell1 - Units[i].voltage_Cell2;
+// diese Funktion Balanced
+void balancing(struct CellData own_cell) {
+  // Nummer der Zelle mit der kleineren Spannung
+  int lower_cell;
+
+  // Spannung der niedrigeren Zelle
+  float start_voltage;
+
+  float new_voltage;
+
+  // gewuenschte Spannung
+  float desired_voltage;
+
+
+  // Abfrage ob Zelle 1 zu wenug Spannung hat
+  if (own_cell.voltage_Cell1 < own_cell.voltage_Cell2 && abs(own_cell.voltage_Cell1 - own_cell.voltage_Cell2) > 0.1) {
+    lower_cell = 1;
+    desired_voltage = own_cell.voltage_Cell1;
+    current_voltage = own_cell.voltage_Cell2;
+
+    // initialisierung des Potensiometers
+    digitalWrite(pinINC_2, LOW);
+  } 
+
+
+  // Abfrage ob Zelle 2 zu wenig Spannung hat
+  if (own_cell.voltage_Cell1 > own_cell.voltage_Cell2 && abs(own_cell.voltage_Cell1 - own_cell.voltage_Cell2) > 0.1) {
+    lower_cell = 2;
+    desired_voltage = own_cell.voltage_Cell2;
+    current_voltage = own_cell.voltage_Cell1;
+
+    // initialisierung des Potensiometers
+    digitalWrite(pinINC_1, LOW);
+  } 
+
   
-  // Frage 1: Ist Zelle 1 viel voller als Zelle 2?
-  if (diff > diffStart) { 
-    Units[i].is_balancing_Z1 = true;  // Merken: Z1 entladen
-    Units[i].is_balancing_Z2 = false; // Z2 muss nichts tun
+  // schaltung des DC DC Wandlers wenn Zelle 1 zu wenig spannung hat
+  if (lower_cell = 1) {
+
+    // standart maessig wird die richtung auf Low gesetzt
+    digitalWrite(pinUD_2, LOW);
+
+    while (abs(desired_voltage - new_voltage) > 0.2) {
+
+      // hier wird geguckt in welche Richtung das Poti arbeiten muss
+      if (new_voltage > start_voltage) {
+        digitalWrite(pinUD_2, HIGH);
+      }
+
+      // bewegung des Potis um einen Schritt
+      digitalWrite(pinINC_2, LOW);
+      delayMicroseconds(10);
+    }
+
+    digitalWrite(pinCS_2, HIGH);
   } 
-  // Frage 2: Ist Zelle 2 viel voller als Zelle 1?
-  else if (diff < -diffStart) { 
-    Units[i].is_balancing_Z1 = false; 
-    Units[i].is_balancing_Z2 = true;  // Merken: Z2 entladen
-  } 
-  // Frage 3: Sind sie nah genug beieinander?
-  else if (abs(diff) < diffStop) { 
-    Units[i].is_balancing_Z1 = false;
-    Units[i].is_balancing_Z2 = false;
+  
+  if (lower_cell = 2) {
+
+    // standart maessig wird die Richtung auf Low gesetzt
+    digitalWrite(pinUD_1, LOW);
+
+    while (abs(desired_voltage - new_voltage) > 0.2) {
+
+      // hier wird geguckt in welche Richtung das Poti arbeiten muss
+      if (new_voltage > start_voltage) {
+        digitalWrite(pinUD_1, HIGH);
+      }
+
+      // bewegung des Potis um einen Schritt
+      digitalWrite(pinINC_1, LOW);
+      delayMicroseconds(10);
+    }
+
+    digitalWrite(pinCS_1, HIGH);
   }
 
-}
 
 
-void run_local_balancing(CellData &data, float targetVoltage) {
-  // Hysterese-Wert (verhindert Flattern der MOSFETs bei exakt 3.6V)
-  const float HYSTERESIS = 0.05; 
+  
 
-  // --- Zelle 1 Check ---
-  if (data.voltage_Cell1 > targetVoltage) {
-    digitalWrite(PIN_MOSFET_Z1, HIGH);
-    data.is_balancing_Z1 = true;
-  } 
-  else if (data.voltage_Cell1 < (targetVoltage - HYSTERESIS)) {
-    digitalWrite(PIN_MOSFET_Z1, LOW);
-    data.is_balancing_Z1 = false;
-  }
-
-  // --- Zelle 2 Check ---
-  if (data.voltage_Cell2 > targetVoltage) {
-    digitalWrite(PIN_MOSFET_Z2, HIGH);
-    data.is_balancing_Z2 = true;
-  } 
-  else if (data.voltage_Cell2 < (targetVoltage - HYSTERESIS)) {
-    digitalWrite(PIN_MOSFET_Z2, LOW);
-    data.is_balancing_Z2 = false;
-  }
 }
 
 
