@@ -5,9 +5,7 @@
 #include <Arduino.h>
 #include "BMS_Definitions.h"
 
-measure_Cell_Data read_Data_for_own_unit() {
-
-  struct measure_Cell_Data cell;
+void read_Data_for_own_unit(SingleUnitData &unit) {
   
   // 1. MESSUNG (Durchschnitt aus 20 Werten für Stabilität)
   float rawA1 = 0;
@@ -30,14 +28,11 @@ measure_Cell_Data read_Data_for_own_unit() {
   // Zelle 2 berechnen (Differenz)
   float vZelle2 = vGesamt - vZelle1;
 
-  cell.voltage_mV = vGesamt;
-  cell.voltage_Cell1 = vZelle1;
-  cell.voltage_Cell2 = vZelle2;
+  unit.vCell1_mV = vZelle1;
+  unit.vCell2_mV = vZelle2;
+  unit.voltage_mV = vGesamt;
 
-  cell.temperature_C = 25;
-
-  return cell;
-
+  unit.temperature_C = 25;
 }
 
 // diese Funktion Balanced
@@ -58,7 +53,7 @@ void balancing(struct CellData own_cell) {
   if (own_cell.voltage_Cell1 < own_cell.voltage_Cell2 && abs(own_cell.voltage_Cell1 - own_cell.voltage_Cell2) > 0.1) {
     lower_cell = 1;
     desired_voltage = own_cell.voltage_Cell1;
-    current_voltage = own_cell.voltage_Cell2;
+    start_voltage = own_cell.voltage_Cell2;
 
     // initialisierung des Potensiometers
     digitalWrite(pinINC_2, LOW);
@@ -69,7 +64,7 @@ void balancing(struct CellData own_cell) {
   if (own_cell.voltage_Cell1 > own_cell.voltage_Cell2 && abs(own_cell.voltage_Cell1 - own_cell.voltage_Cell2) > 0.1) {
     lower_cell = 2;
     desired_voltage = own_cell.voltage_Cell2;
-    current_voltage = own_cell.voltage_Cell1;
+    start_voltage = own_cell.voltage_Cell1;
 
     // initialisierung des Potensiometers
     digitalWrite(pinINC_1, LOW);
@@ -92,6 +87,14 @@ void balancing(struct CellData own_cell) {
       // bewegung des Potis um einen Schritt
       digitalWrite(pinINC_2, LOW);
       delayMicroseconds(10);
+
+      // erneute Messung
+      read_Data_for_own_unit(&own_cell);
+
+      // startvoltage wird die Spannung vor der Veraenderung zugewoesen
+      start_voltage = new_voltage;
+      // new voltage wird der veraenderten spannung zugewiesen
+      new_voltage = own_cell.voltage_Cell2;
     }
 
     digitalWrite(pinCS_2, HIGH);
@@ -111,7 +114,12 @@ void balancing(struct CellData own_cell) {
 
       // bewegung des Potis um einen Schritt
       digitalWrite(pinINC_1, LOW);
-      delayMicroseconds(10);
+
+      read_Data_for_own_unit(&own_cell);
+
+      start_voltage = new_voltage;
+      new_voltage = own_cell.voltage_Cell2;
+
     }
 
     digitalWrite(pinCS_1, HIGH);

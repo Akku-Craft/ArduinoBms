@@ -61,9 +61,6 @@ struct CellData {
   int voltage_Cell1;      // Zellspannung der ersten Zelle
   int voltage_Cell2;      // Zellspannung der zweiten Zelle
   int temperature_C;      // Aktuelle Zelltemperatur in Grad Celsius
-  // Status & Steuerung
-  bool is_balancing_1;      // TRUE, wenn der Balancierwiderstand dieser Zelle aktiv ist
-  bool is_balancing_2;      // TRUE, wenn der Balancierwiderstand dieser Zelle aktiv ist
   // Fehlermeldungen der Zelle
   Error_Messages error;
   SystemStatus status;
@@ -86,13 +83,5 @@ struct ScanPacket {
   SingleUnitData units[MAX_UNITS];
   uint8_t checksum;
 };
-
-// diese Struktur ist der Rueckgabewert der Funktion die die einzelnen Zellwerte ausliesst
-struct measure_Cell_Data {
-  int voltage_mV;         // Aktuelle Gesamtzellspannung in Millivolt
-  int voltage_Cell1;      // Zellspannung der ersten Zelle
-  int voltage_Cell2;      // Zellspannung der zweiten Zelle
-  int temperature_C;
-}
 
 #endif

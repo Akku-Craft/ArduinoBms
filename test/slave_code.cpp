@@ -4,7 +4,7 @@
 #include <SoftwareSerial.h>
 
 // diese Struktur represantiert Lokal die Einheit
-struct CellData own_cell;
+struct SingleUnitData own_cell;
 
 // hier werden die Pins zur Kommunikation definiert
 SoftwareSerial SerialDown(10, 11); // fuer die Kommunikation die Richtung Slaves geht
@@ -83,13 +83,7 @@ void recv_data_from_serialdown() {
                 // Wir warten, bis der REST (sizeof(ScanPacket) - 2) da ist
                 while(SerialDown.available() < (sizeof(ScanPacket) - 2));
 
-                struct measure_Cell_Data cell;
-                cell = read_Data_for_own_unit();
-
-                own_cell.voltage_mV = cell.voltage_mV;
-                own_cell.voltage_Cell1 = cell.voltage_Cell1;
-                own_cell.voltage_Cell2 = cell.voltage_Cell2;
-                own_cell.temperature = cell.temperature_C;
+                read_Data_for_own_unit(own_cell);
                 
                 struct ScanPacket sp;
                 sp.startByte = start;
@@ -135,13 +129,11 @@ void recv_data_from_serialdown() {
 void setup() {
     SerialUp.begin(9600);
     SerialDown.begin(9600);
-
-    own_cell.is_balancing_1 = false;
-    own_cell.is_balancing_2 = false;
-
 }
 
 void loop() {
     recv_data_from_serialdown();
+
+    balancing();
 
 }

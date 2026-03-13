@@ -6,7 +6,7 @@
 // Anzahl der aktuell verbundehnen Einheiten
 int currentUnitCount = 0;
 
-struct CellData own_unit;
+struct SingleUnitData own_unit;
 
 // Array in dehnen alle Units gespecihert sinddx
 CellData Units[MAX_UNITS];
@@ -60,7 +60,6 @@ void register_and_check_units() {
     for (int i = 0; i < currentUnitCount; i++) {
       // Wir kopieren die Daten in unser permanentes Units-Array
       Units[i] = incoming.units[i];
-      Units[i].isConnected = true;
     }
 
     // "Löschen": Alle Einheiten, die früher da waren, aber jetzt fehlen
@@ -69,9 +68,6 @@ void register_and_check_units() {
       Units[i].voltage_Cell2 = 0.0;
       Units[i].temperature_C = 0.0;
       Units[i].voltage_mV = 0;
-      Units[i].isConnected = false;
-      Units[i].is_balancing_Z1 = false;
-      Units[i].is_balancing_Z2 = false;
       Units[i].internal_ID = i;
     }
   } else {
@@ -85,9 +81,6 @@ void register_and_check_units() {
       Units[i].voltage_Cell2 = 0.0;
       Units[i].voltage_mV = 0;
       Units[i].temperature_C = 0;
-      Units[i].isConnected = false;
-      Units[i].is_balancing_Z1 = false;
-      Units[i].is_balancing_Z2 = false;
       Units[i].internal_ID = i;
     }
 
@@ -174,15 +167,12 @@ void loop() {
     Units[0].voltage_Cell2 = first_unit.voltage_Cell2;
     Units[0].temperature_C = first_unit.temperature_C;
 
-    Units[0].is_balancing_1 = false;
-    Units[0].is_balancing_2 = false;
     Units[0].status = STATUS_IDLE;
 
     register_and_check_units();
   }
 
-
-  print_BMS_Status();
+  balancing();
 
   // Status-LED blinken lassen (ohne delay, damit Messung schnell bleibt)
   digitalWrite(PIN_STATUS_LED, !digitalRead(PIN_STATUS_LED));
