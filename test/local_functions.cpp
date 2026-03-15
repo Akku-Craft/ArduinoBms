@@ -32,7 +32,21 @@ void read_Data_for_own_unit(SingleUnitData &unit) {
   unit.vCell2_mV = vZelle2;
   unit.voltage_mV = vGesamt;
 
-  unit.temperature_C = 25;
+
+  // Messung der Temperatur
+  // 1. Rohwert einlesen (0 bis 1023)
+  int rawValue = analogRead(tempPin);
+  
+  // 2. Spannung berechnen (bei 5V Referenz)
+  float voltage = rawValue * (5.0 / 1023.0);
+  
+  // 3. Temperatur in Kelvin (10mV = 1K -> Spannung * 100)
+  float temperatureKelvin = voltage * 100.0;
+  
+  // 4. Umrechnung in Celsius
+  float temperatureCelsius = temperatureKelvin - 273.15;
+
+  unit.temp_C = temperatureCelsius;
 }
 
 // diese Funktion Balanced
@@ -50,7 +64,7 @@ void balancing(struct CellData own_cell) {
 
 
   // Abfrage ob Zelle 1 zu wenug Spannung hat
-  if (own_cell.voltage_Cell1 < own_cell.voltage_Cell2 && abs(own_cell.voltage_Cell1 - own_cell.voltage_Cell2) > 0.1) {
+  if (own_cell.voltage_Cell1 < own_cell.voltage_Cell2 && abs(own_cell.voltage_Cell1 - own_cell.voltage_Cell2) > 0.2) {
     lower_cell = 1;
     desired_voltage = own_cell.voltage_Cell1;
     start_voltage = own_cell.voltage_Cell2;
@@ -61,7 +75,7 @@ void balancing(struct CellData own_cell) {
 
 
   // Abfrage ob Zelle 2 zu wenig Spannung hat
-  if (own_cell.voltage_Cell1 > own_cell.voltage_Cell2 && abs(own_cell.voltage_Cell1 - own_cell.voltage_Cell2) > 0.1) {
+  if (own_cell.voltage_Cell1 > own_cell.voltage_Cell2 && abs(own_cell.voltage_Cell1 - own_cell.voltage_Cell2) > 0.2) {
     lower_cell = 2;
     desired_voltage = own_cell.voltage_Cell2;
     start_voltage = own_cell.voltage_Cell1;
@@ -77,7 +91,7 @@ void balancing(struct CellData own_cell) {
     // standart maessig wird die richtung auf Low gesetzt
     digitalWrite(pinUD_2, LOW);
 
-    while (abs(desired_voltage - new_voltage) > 0.2) {
+    while (abs(desired_voltage - new_voltage) > 0.1) {
 
       // hier wird geguckt in welche Richtung das Poti arbeiten muss
       if (new_voltage > start_voltage) {

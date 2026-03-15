@@ -4,12 +4,15 @@
 
 #include <Arduino.h>
 
+// Pin Temperatursensor
+const int tempPin = A0;
+
 // Pin Definitionen fuer Potensiometer 1
 const int pinCS_1  = 1; // Chip Select
 const int pinINC_1 = 2;  // Increment (Der "Takt")
 const int pinUD_1  = 3;  // Up / Down (Richtung)
 
-// Pin Definitionen fuer Potensiometer 1
+// Pin Definitionen fuer Potensiometer 2
 const int pinCS_2  = 4; // Chip Select
 const int pinINC_2 = 5;  // Increment (Der "Takt")
 const int pinUD_2  = 6;  // Up / Down (Richtung)
@@ -71,8 +74,7 @@ struct SingleUnitData {
   uint16_t vCell1_mV;    // z.B. 3750 für 3.75V
   uint16_t vCell2_mV;
   uint16_t voltage_mV;
-  int16_t temp_C;
-  int number;
+  float temp_C;
 };
 
 // dieses Packet wird rumgeschickt um die Daten aller Einheiten zu erhalten

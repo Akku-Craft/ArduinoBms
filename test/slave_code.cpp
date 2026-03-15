@@ -54,7 +54,6 @@ void handleScanPacket(Packet &p) {
     p.data[myPos].voltage_Cell2 = own_cell.voltage_Cell2;
     p.data[myPos].voltage_mV = own_cell.voltage_mV;
     p.data[myPos].temperature_C = own_cell.temperature_C;
-    p.data[myPos].isConnected = true;
 
     // Den Zähler für den nächsten Nachbarn erhöhen
     p.activeUnits++;

@@ -154,7 +154,7 @@ const unsigned long scanInterval = 5000; // 5000ms = 5 Sekunden
 // Die Hauptschleife läuft unendlich.
 void loop() {
 
-  // alle 5 Sekunden wird eine Messung durchgefuehrt
+  // alle 5 Sekunden wird eine Messung durchgefuehrt 
   if (currentTime - lastScanTime >= scanInterval) {
     // bevor man andere Einheiten regestrieren und einlesen kann muss ma erst die erste Einheit hinzufuegen
     read_Data_for_own_unit();
